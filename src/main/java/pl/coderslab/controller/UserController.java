@@ -2,6 +2,7 @@ package pl.coderslab.controller;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,7 +14,11 @@ import pl.coderslab.entity.User;
 import pl.coderslab.repository.UserRepository;
 import pl.coderslab.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Controller
@@ -27,30 +32,33 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
-    @GetMapping("")
-    public String list(Model model){
-        model.addAttribute("user", userRepository.findAll());
-        return "user/list";
-    }
+    @GetMapping("/list")
+    public String list(Model model, HttpServletRequest request){
+        model.addAttribute("wrongPassword" , request.getParameter("wrongPassword"));
 
-    @GetMapping("/add")
-    public String add(Model model){
-        model.addAttribute("user", new User());
-        return "user/form";
-    }
-    @PostMapping("/add")
-    public String add(@Valid User user, BindingResult bindingResult){
-        if(!bindingResult.hasErrors()) userService.addUser(user);
-        return "redirect:/user";
+        HttpSession sess = request.getSession();
+        User user = (User) sess.getAttribute("UserLogged");
+        if( user.getUsername().equals("admin")){
+            model.addAttribute("user", userRepository.findAll());
+        }else {
+            List<User> users = new ArrayList<>();
+            users.add(userRepository.findFirstById(user.getId()));
+            model.addAttribute("user", users);
+        }
+        return "user/list";
     }
     @GetMapping("/add/{id}")
     public String edit(Model model, @PathVariable Long id){
-        User user = userRepository.findFirstById(id);
-        String password = "";
-        if( BCrypt.checkpw("salat" ,user.getPassword())) password="salat";
-        model.addAttribute("pass", password);
-        model.addAttribute("user", user);
+        model.addAttribute("user", userRepository.findFirstById(id));
         return "user/form";
+    }
+    @PostMapping("/add/{id}")
+    public String edit(@Valid User user, BindingResult bindingResult, Model model){
+        if(!bindingResult.hasErrors()){
+            if(BCrypt.checkpw(user.getPassword(),userRepository.findFirstById(user.getId()).getPassword())) userService.addUser(user);
+            else model.addAttribute("wrongPassword", true);
+        }
+        return "redirect:/user/list";
     }
 //    @PostMapping("/add/{id}")
 //    public String edit(@Valid User user, BindingResult bindingResult){

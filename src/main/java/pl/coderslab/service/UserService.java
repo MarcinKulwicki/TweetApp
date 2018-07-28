@@ -8,6 +8,7 @@ import pl.coderslab.repository.UserRepository;
 
 import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Component
@@ -32,6 +33,20 @@ public class UserService {
 
     public User getLogedUser(HttpServletRequest request){
         return (User)request.getSession().getAttribute("UserLogged");
+    }
+
+    public boolean changePasswordIfCorrect(User user, HttpServletRequest request){
+        User userInBase = userRepository.findFirstByEmail(user.getEmail());
+        if(userInBase != null){
+            if( userInBase.getUsername().equals(user.getUsername())){
+                HttpSession sess = request.getSession();
+                sess.invalidate();
+                userInBase.setPassword(BCrypt.hashpw(request.getParameter("newPassword"), BCrypt.gensalt()) );
+                userRepository.save(userInBase);
+                return true;
+            }
+        }
+        return false;
     }
 
 

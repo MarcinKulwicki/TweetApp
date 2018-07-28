@@ -5,6 +5,8 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="user")
@@ -23,7 +25,18 @@ public class User {
     @Column(unique = true)
     private String email;
 
+    @OneToMany(mappedBy = "user")
+    List<Tweet> tweets = new ArrayList<>();
+
     public User() {}
+
+    public List<Tweet> getTweets() {
+        return tweets;
+    }
+
+    public void setTweets(List<Tweet> tweets) {
+        this.tweets = tweets;
+    }
 
     public String getEmail() {
         return email;
