@@ -12,12 +12,13 @@
     <title>Title</title>
 </head>
 <body>
-
+<c:import url="../fragments/header.jsp"/>
 <c:if test="${wrongPassword}">
     Wrong password
 </c:if>
 
 <ul>
+    <p><a href="${pageContext.request.contextPath}/login"><< Back</a></p>
     <c:forEach items="${user}" var="tmp">
         <li>
             ${tmp.email}
@@ -26,6 +27,11 @@
             <%--<p><a href="${pageContext.request.contextPath}/author/form/delete/${tmp.id}">Delete Author</a></p>--%>
         </li>
     </c:forEach>
+
+    <p><a href="${pageContext.request.contextPath}/tweet/list/user/add">Add Tweet</a></p>
+    <p><a href="${pageContext.request.contextPath}/tweet/list/user">List Tweet</a></p>
+
+
 </ul>
 </body>
 </html>

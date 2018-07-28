@@ -12,17 +12,13 @@
     <title>Title</title>
 </head>
 <body>
-
-<c:if test="${wrongPassword}">
-    Wrong password
-</c:if>
-
+<c:import url="../fragments/header.jsp"/>
+<p><a href="${pageContext.request.contextPath}/user/list"><< Back</a></p>
 <ul>
-    <c:forEach items="${user}" var="tmp">
+    <c:forEach items="${tweets}" var="tmp">
         <li>
-            ${tmp.email}
-            ${tmp.password}
-            <p><a href="${pageContext.request.contextPath}/user/add/${tmp.id}">Edit User</a></p>
+            ${tmp.tweet}
+            <p><a href="${pageContext.request.contextPath}/tweet/list/user/add${tmp.id}">Edit Tweet</a></p>
             <%--<p><a href="${pageContext.request.contextPath}/author/form/delete/${tmp.id}">Delete Author</a></p>--%>
         </li>
     </c:forEach>

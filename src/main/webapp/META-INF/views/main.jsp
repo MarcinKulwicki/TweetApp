@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: wdr434
@@ -11,6 +12,15 @@
     <title>Title</title>
 </head>
 <body>
+<c:import url="fragments/header.jsp"/>
+
+<c:forEach items="${tweets}" var="tmp">
+    <li>
+            ${tmp.tweet}
+            ${user[tmp.id].username}
+            <%--<p><a href="${pageContext.request.contextPath}/author/form/delete/${tmp.id}">Delete Author</a></p>--%>
+    </li>
+</c:forEach>
 
 </body>
 </html>

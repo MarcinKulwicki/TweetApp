@@ -11,8 +11,12 @@ import java.util.List;
 public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
 
-    @Query("select t from Tweet t where t.user.id = :id order by t.localDateTime desc")
-    List<Tweet> findAllByUserId(@Param("id") Long id);
 
-    List<Tweet> findAllByUserOrOrderByLocalDateTimeDesc(User user);
+    @Query(value = "SELECT * FROM tweet where user_id = :id" , nativeQuery = true)
+    List<Tweet> findAllByUserId(@Param("id") Long id);
+    Tweet findFirstById(Long id);
+
+    @Query(value = "SELECT * FROM tweet order by localDateTime desc limit :limit" ,nativeQuery = true)
+    List<Tweet> findAllLimited(@Param("limit")Long limit);
+
 }

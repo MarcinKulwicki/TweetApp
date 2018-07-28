@@ -13,16 +13,15 @@
     <title>Title</title>
 </head>
 <body>
-
+<c:import url="../fragments/header.jsp"/>
+<p><a href="${pageContext.request.contextPath}/user/list"><< Back</a></p>
 <c:forEach items="${error}" var="err">
     ${err.propertyPath} ${err.message} <br/>
 </c:forEach>
 
-<form:form method="post" modelAttribute="user">
+<form:form method="post" modelAttribute="tweets">
     <form:errors path="*"/>
-    <form:input path="username" placeholder="First Name"/>
-    <form:input path="email" placeholder="Email"/>
-    <form:password path="password" placeholder="password"/>
+    <form:input path="tweet" placeholder="text..."/>
     <input type="submit">
 </form:form>
 

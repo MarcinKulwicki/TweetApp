@@ -13,6 +13,7 @@
     <title>Login</title>
 </head>
 <body>
+<c:import url="fragments/header.jsp"/>
 
     <form method="post">
         <input type="text" name="username" placeholder="username">

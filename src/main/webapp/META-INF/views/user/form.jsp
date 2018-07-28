@@ -13,7 +13,8 @@
     <title>Title</title>
 </head>
 <body>
-
+<c:import url="../fragments/header.jsp"/>
+<p><a href="${pageContext.request.contextPath}/user/list"><< Back</a></p>
 <c:forEach items="${error}" var="err">
     ${err.propertyPath} ${err.message} <br/>
 </c:forEach>

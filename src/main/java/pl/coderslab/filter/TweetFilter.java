@@ -1,7 +1,5 @@
 package pl.coderslab.filter;
 
-import pl.coderslab.entity.User;
-
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -9,8 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(filterName = "UserFilter" , urlPatterns = "/user/*")
-public class UserFilter implements Filter {
+@WebFilter(filterName = "TweetFilter" , urlPatterns = "/tweet/*")
+public class TweetFilter implements Filter {
     public void destroy() {
     }
 
@@ -20,10 +18,11 @@ public class UserFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) resp;
         HttpSession sess = request.getSession();
 
-       if(sess.getAttribute("UserLogged") == null ) {
+        if(sess.getAttribute("UserLogged") == null ) {
             response.sendRedirect("/login");
             return;
-       }
+        }
+
         chain.doFilter(req, resp);
     }
 
