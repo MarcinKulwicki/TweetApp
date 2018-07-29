@@ -5,6 +5,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "tweet")
@@ -22,12 +23,23 @@ public class Tweet {
     @ManyToOne
     private User user;
 
+    @OneToMany(mappedBy = "tweet")
+    private List<Coment> coments;
+
     public Tweet(){
         setLocalDateTime();
     }
 
     public void setLocalDateTime(LocalDateTime localDateTime) {
         this.localDateTime = localDateTime;
+    }
+
+    public List<Coment> getComents() {
+        return coments;
+    }
+
+    public void setComents(List<Coment> coments) {
+        this.coments = coments;
     }
 
     public Long getId() {

@@ -13,6 +13,8 @@ import pl.coderslab.repository.UserRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -26,8 +28,12 @@ public class MainController {
     @GetMapping("")
     public String showTweets(Model model){
 
-        List<Tweet> tweets = tweetRepository.findAllLimited(3L);
-        List<User> users = userRepository.findAll();
+        List<Tweet> tweets = tweetRepository.findAllLimited(20L);
+        List<User> users = new ArrayList<>();
+        for(Tweet tweet:tweets){
+            users.add(userRepository.findFirstById(tweet.getUser().getId()));
+        }
+        Collections.reverse(users);
         model.addAttribute("user", users);
         model.addAttribute("tweets", tweets);
         return "main";

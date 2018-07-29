@@ -17,7 +17,8 @@
 <c:forEach items="${tweets}" var="tmp">
     <li>
             ${tmp.tweet}
-            ${user[tmp.id].username}
+
+            ${user[tmp.id-1].username}
             <%--<p><a href="${pageContext.request.contextPath}/author/form/delete/${tmp.id}">Delete Author</a></p>--%>
     </li>
 </c:forEach>
