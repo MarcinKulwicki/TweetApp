@@ -18,6 +18,9 @@ public class Coment {
     @ManyToOne
     Tweet tweet;
 
+    @ManyToOne
+    User user;
+
     public Coment(){
     }
 
@@ -43,5 +46,13 @@ public class Coment {
 
     public void setTweet(Tweet tweet) {
         this.tweet = tweet;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

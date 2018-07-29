@@ -18,7 +18,8 @@
     <c:forEach items="${tweets}" var="tmp">
         <li>
             ${tmp.tweet}
-            <p><a href="${pageContext.request.contextPath}/tweet/list/user/add${tmp.id}">Edit Tweet</a></p>
+            <p><a href="${pageContext.request.contextPath}/tweet/list/user/add/${tmp.id}">Edit Tweet</a></p>
+            <p><h5><a href="${pageContext.request.contextPath}/coment/${tmp.id}">Add comment</a></h5></p>
             <%--<p><a href="${pageContext.request.contextPath}/author/form/delete/${tmp.id}">Delete Author</a></p>--%>
         </li>
     </c:forEach>

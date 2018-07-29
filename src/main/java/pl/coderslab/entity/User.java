@@ -28,6 +28,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     List<Tweet> tweets = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    List<Coment> coments = new ArrayList<>();
+
     public User() {}
 
     public List<Tweet> getTweets() {
@@ -68,5 +71,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Coment> getComents() {
+        return coments;
+    }
+
+    public void setComents(List<Coment> coments) {
+        this.coments = coments;
     }
 }

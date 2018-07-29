@@ -19,7 +19,8 @@
             ${tmp.tweet}
 
             ${user[tmp.id-1].username}
-            <%--<p><a href="${pageContext.request.contextPath}/author/form/delete/${tmp.id}">Delete Author</a></p>--%>
+                <h5><a href="${pageContext.request.contextPath}/coment/${tmp.id}">Show Tweet</a></h5>
+
     </li>
 </c:forEach>
 
